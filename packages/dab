@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+cd "$(dirname "$0")"
+sleep 0.5s
+mkdir tmp 
+sleep 0.5s
+echo "changed directory"
+
+dpkg-deb -R *.deb tmp
+
+echo "unpacked"
+
+sleep 0.5s
+
+chmod -R 0777 tmp
+ 
+cd tmp
+echo "changed "
+mv Applications Payload
+sleep 0.2s 
+echo "renamed"
+sleep 0.2s
+zip -q -r Payload.zip Payload
+echo "zipped"
+sleep 0.2s
+appinst *.zip
+sleep 0.2s
+cd ..
+echo "out"
+sleep 0.2s
+rm -r tmp
+rm *.deb
+echo "removed "
+sleep 0.2s
