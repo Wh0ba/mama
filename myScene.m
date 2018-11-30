@@ -158,19 +158,17 @@ static const uint32_t enemyCategory        =  0x1 << 1;
 	for (UITouch *touch in touches) {
 		
 		CGPoint locc = [touch locationInNode:self];
-		if (!self.paused) {
-			[self movePlayerWithX:locc.x];
-		}
 		
     //if start button touched, bring the rain
 		SKNode *node = [self nodeAtPoint:locc];
 		
 		if ([node.name isEqualToString:@"pauseButton"]) {
+			self.paused = !self.paused;
+		}
 		
-		self.paused = !self.paused;
-		
-		
-	}
+		if (!self.paused) {
+			[self movePlayerWithX:locc.x];
+		}
 		
 		//[self shoot];
 	}
@@ -324,7 +322,7 @@ static const uint32_t enemyCategory        =  0x1 << 1;
 	// running the action 
 	[bullet runAction:actionSeq];
 	
-	if (!self.audioState) {
+	if (self.audioState) {
 		[self runAction:[SKAction playSoundFileNamed:FireAudio waitForCompletion:false]];
 	}
 	
@@ -568,7 +566,7 @@ explosion.position = CGPointMake(x, y);
     
     SKAction *spanSeq = [SKAction sequence:@[addX, fadeMe, wait, del]];
 	
-	if (!self.audioState) {
+	if (self.audioState) {
 		[self runAction:[SKAction playSoundFileNamed:ExpAudio waitForCompletion:false]];
 	}
 	[self runAction:spanSeq];

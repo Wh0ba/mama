@@ -4,7 +4,16 @@
 
 // assets
 
+
+
+
+
 #define btn1 @"assets/ui/btn1.png"
+
+
+
+
+void refreshAudioBtn();
 
 @interface menuScene ()
 
@@ -77,8 +86,11 @@
 	audioBtn = [SKSpriteNode spriteNodeWithTexture:atext];
 	audioBtn.size = CGSizeMake(40,40);
 	audioBtn.name = @"audioButton";
-	audioBtn.position = CGPointMake(CGRectGetMidX(self.frame) - 80, self.frame.size.height / 3);
+	audioBtn.position = CGPointMake(75, self.frame.size.height / 3);
+	audioBtn.anchorPoint =  CGPointMake(0.0,0.0);
+	
 	[self addChild:audioBtn];
+	
 	
 }
 
@@ -109,12 +121,11 @@
 		
 		[[NSUserDefaults standardUserDefaults] setObject:@(audioState) forKey:@"audioState"];
 		
-		audioBtn.texture = [SKTexture textureWithImageNamed:audioState?soundOn : soundOff];
 		
+		audioBtn.texture = [SKTexture textureWithImageNamed:audioState?soundOn :soundOff];
 		
 	}
 }
-
 
 
 
