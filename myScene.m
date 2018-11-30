@@ -18,6 +18,15 @@ static const uint32_t enemyCategory        =  0x1 << 1;
 
 @property (nonatomic, strong) SKSpriteNode *pauseBtn;
 
+	
+	
+	@property (nonatomic) SKEmitterNode *fire;
+	
+	@property (nonatomic) SKSpriteNode *player;
+	
+	@property (nonatomic, strong) SKLabelNode *scoreLabel;
+
+
 @end
 
 
@@ -27,7 +36,9 @@ static const uint32_t enemyCategory        =  0x1 << 1;
 	int score;
 	float speed;
 	float spawnSpd;
-	
+	NSDictionary* lvlPlist;
+	NSDictionary* lvl1;
+	NSString *confPath;
 }
 
 
@@ -39,12 +50,12 @@ static const uint32_t enemyCategory        =  0x1 << 1;
 		
 		[self setupScene];
 		
-		_confPath = [[NSBundle mainBundle] pathForResource:@"lvl1" 
+		confPath = [[NSBundle mainBundle] pathForResource:@"lvl1" 
                                                      ofType:@"plist"];
 		
-		_lvlPlist = [NSDictionary dictionaryWithContentsOfFile:_confPath];
+		lvlPlist = [NSDictionary dictionaryWithContentsOfFile:confPath];
 		
-		_spark = [UIImage imageNamed:@"spark.png"];
+		
 		
 		[self addCo2];
 	}
@@ -86,19 +97,10 @@ static const uint32_t enemyCategory        =  0x1 << 1;
 	
 	
 	
+	[self createScoreLabel];
 	
 	// the label 
-	_scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Copperplate-Bold"];
 	
-	//_scoreLabel.text = [_lvl1 valueForKeyPath:@"score"];
-	_scoreLabel.text = [NSString stringWithFormat:@"Score = %d", score];
-	_scoreLabel.fontColor = [UIColor colorWithRed:1 green:0.20 blue:0.13 alpha:1];
-	_scoreLabel.position = CGPointMake(20 , self.frame.size.height - 40);
-	_scoreLabel.fontSize = 23;
-	
-	_scoreLabel.horizontalAlignmentMode = 1;
-	
-	[self addChild:_scoreLabel];
 	
 	self.player = [SKSpriteNode spriteNodeWithImageNamed:ship];
 	
@@ -146,7 +148,48 @@ static const uint32_t enemyCategory        =  0x1 << 1;
 	
 }
 
-
+- (void)createScoreLabel {
+	
+	
+	
+	_scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-Bold"];
+	
+	//_scoreLabel.text = [_lvl1 valueForKeyPath:@"score"];
+	_scoreLabel.text = [NSString stringWithFormat:@"%d", score];
+	_scoreLabel.fontColor = [UIColor colorWithRed:0.4 green:1 blue:1 alpha:1];
+	_scoreLabel.position = CGPointMake(20 , self.frame.size.height - 40);
+	_scoreLabel.fontSize = 26;
+	_scoreLabel.zPosition = 1;
+	_scoreLabel.horizontalAlignmentMode = 1;
+	
+	[self addChild:_scoreLabel];
+	/*
+	     
+	SKEffectNode *effectNode =  [[SKEffectNode alloc] init];
+	[effectNode addChild:_scoreLabel];
+	effectNode.position = CGPointMake(20 , self.frame.size.height - 40);
+	effectNode.zPosition = 1;
+	
+	#pragma mark -
+	#pragma mark Vertex
+	     
+	vector_float2  vecs[] = {
+	    //first row 
+	    {0, 1}, {0.47, 1}, {0.95, 1},
+	    //second row
+	    {0, 0.5}, {0.45, 0.5}, {0.8, 0.6},
+	    //third row
+	    {0, 0}, {0.4, 0.2}, {0.7, 0.3} };
+	     
+	SKWarpGeometryGrid* warpGeometryGrid = [SKWarpGeometryGrid gridWithColumns: 2 rows: 2];
+	
+	vector_float2 * destp = vecs;
+	     
+	effectNode.warpGeometry = [warpGeometryGrid gridByReplacingDestPositions: destp];
+	
+	[self addChild:effectNode];
+	*/
+}
 
 
 
@@ -199,7 +242,7 @@ static const uint32_t enemyCategory        =  0x1 << 1;
     // this function get called before every Frame
 
     
-    _scoreLabel.text = [NSString stringWithFormat:@"Score = %d", score];
+    _scoreLabel.text = [NSString stringWithFormat:@"%d", score];
 
     // controlliNg  speed
     
@@ -494,12 +537,18 @@ static const uint32_t enemyCategory        =  0x1 << 1;
     SKEmitterNode *explosion = [[SKEmitterNode alloc] init];
     
     //[explosion setParticleTexture:[SKTexturetext:@"asteroid1"]];
-    
+	//CGFloat xx,yy;
+	if (x == 0) {
+		x = 500;
+	}
+	if (y == 0) {
+		y = 500;
+	}
 
 explosion.position = CGPointMake(x, y);
 
 
-[explosion setParticleTexture:[SKTexture textureWithImage:_spark]];
+[explosion setParticleTexture:[SKTexture textureWithImage:[UIImage imageNamed:@"spark.png"]]];
     
 [explosion setParticleColor:[UIColor colorWithRed:1.00 green:0.34 blue:0.11 alpha:1.00]];
     
@@ -586,7 +635,7 @@ explosion.position = CGPointMake(x, y);
 
 
 
-[_fire setParticleTexture:[SKTexture textureWithImage:_spark]];
+[_fire setParticleTexture:[SKTexture textureWithImage:[UIImage imageNamed:@"spark.png"]]];
     
 [_fire setParticleColor:[SKColor colorWithRed:0.36 green:0.48 blue:1.00 alpha:1.00]];
     

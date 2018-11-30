@@ -1,6 +1,7 @@
 #define dgrToRad(degrees)((M_PI * degrees)/180)
 
 
+#define screenFrame [UIScreen mainScreen].bounds
 
 
 #define soundOn @"assets/ui/audioOn.png"

@@ -1,9 +1,10 @@
 ARCHS = arm64
+TARGET = ::7.0
 
 include $(THEOS)/makefiles/common.mk
 
 APPLICATION_NAME = mama
-mama_FILES = main.m AppDelegate.m ViewController.m myScene.m menuScene.m
+mama_FILES = $(wildcard *.m) $(wildcard *.swift) 
 mama_FRAMEWORKS = UIKit CoreGraphics SpriteKit
 mama_CFLAGS = -fobjc-arc
 

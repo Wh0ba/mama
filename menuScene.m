@@ -86,7 +86,7 @@ void refreshAudioBtn();
 	audioBtn = [SKSpriteNode spriteNodeWithTexture:atext];
 	audioBtn.size = CGSizeMake(40,40);
 	audioBtn.name = @"audioButton";
-	audioBtn.position = CGPointMake(75, self.frame.size.height / 3);
+	audioBtn.position = CGPointMake(40, self.frame.size.height / 3);
 	audioBtn.anchorPoint =  CGPointMake(0.0,0.0);
 	
 	[self addChild:audioBtn];

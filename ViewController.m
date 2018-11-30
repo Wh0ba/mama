@@ -12,49 +12,24 @@
 
 
 
-
--(void)viewDidLoad{
+- (void)viewDidAppear:(BOOL)animated { 
+	[super viewDidAppear:animated];
 	
+	self.view = [[SKView alloc] initWithFrame:screenFrame];
 	
-	// your code here
-	
-	
-	
-}
-
-
-
-
-- (void)viewWillLayoutSubviews {
-	[super viewWillLayoutSubviews];
-	
-	//Setting the rectangle of the screen frame
-	
-	CGRect screenFrame = [UIScreen mainScreen].bounds;
-	
-	// creating the skview which will hold our scenes  
-	SKView *skView = [[SKView alloc] initWithFrame:screenFrame];
 	
 	//show FPS (frames per second)
-	skView.showsFPS = YES;
+	((SKView*)self.view).showsFPS = YES;
 	//show the node/object count
-	skView.showsNodeCount = YES;
-	// creating the scenes which will hold all the game content
-	//myScene *playScene = [myScene sceneWithSize:skView.bounds.size];
+	((SKView*)self.view).showsNodeCount = YES;
 	
-	menuScene *FirstScene = [menuScene sceneWithSize:skView.bounds.size];
-	
-	//setting the scale mode
-	//playScene.scaleMode = SKSceneScaleModeAspectFill;
+	menuScene *FirstScene = [menuScene sceneWithSize:self.view.bounds.size];
 	
 	FirstScene.scaleMode = SKSceneScaleModeAspectFill;
 	
-	
-	[self.view addSubview:skView];
-	
 	//Setting the scene
 	
-	[skView presentScene:FirstScene];
+	[((SKView*)self.view) presentScene:FirstScene];
 }
 
 - (BOOL)prefersStatusBarHidden
